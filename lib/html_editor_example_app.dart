@@ -18,56 +18,38 @@ class _HtmlEditorExampleState extends State<HtmlEditorExample> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (!kIsWeb) {
-          controller.clearFocus();
-        }
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          elevation: 0,
-          actions: [
-            IconButton(
-                icon: Icon(Icons.refresh),
-                onPressed: () {
-                  if (kIsWeb) {
-                    controller.reloadWeb();
-                  } else {
-                    controller.editorController!.reload();
-                  }
-                })
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              HtmlEditor(
-                controller: controller,
-                htmlEditorOptions: HtmlEditorOptions(
-                  hint: 'Your text here...',
-                  shouldEnsureVisible: true,
-                  //initialText: "<p>text content initial, if any</p>",
-                ),
-                htmlToolbarOptions: HtmlToolbarOptions(
-                  defaultToolbarButtons: [
-                    OtherButtons(fullscreen: false, codeview: false, help: false),
-                    FontButtons(superscript: false, subscript: false, strikethrough: false),
-                    ListButtons(listStyles: false, ol: true, ul: true),
-                    InsertButtons(link: true, picture: false, audio: false, video: false, otherFile: false, table: false, hr: false),
-                  ],
-                  toolbarPosition: ToolbarPosition.belowEditor,
-                  //by default
-                  toolbarType: ToolbarType.nativeGrid,
-                  //by default
-                  renderSeparatorWidget: false,
-                ),
-                otherOptions: OtherOptions(),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            HtmlEditor(
+              controller: controller,
+              htmlEditorOptions: HtmlEditorOptions(
+                hint: 'Your text here...',
+                shouldEnsureVisible: true,
+                //initialText: "<p>text content initial, if any</p>",
               ),
-            ],
-          ),
+              htmlToolbarOptions: HtmlToolbarOptions(
+                defaultToolbarButtons: [
+                  OtherButtons(fullscreen: false, codeview: false, help: false),
+                  FontButtons(superscript: false, subscript: false, strikethrough: false),
+                  ListButtons(listStyles: false, ol: true, ul: true),
+                  InsertButtons(link: true, picture: false, audio: false, video: false, otherFile: false, table: false, hr: false),
+                ],
+                toolbarPosition: ToolbarPosition.belowEditor,
+                //by default
+                toolbarType: ToolbarType.nativeGrid,
+                //by default
+                renderSeparatorWidget: false,
+              ),
+              otherOptions: OtherOptions(),
+            ),
+          ],
         ),
       ),
     );
