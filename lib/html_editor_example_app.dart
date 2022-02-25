@@ -1,9 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
-import 'package:touch_indicator/touch_indicator.dart';
 
 class HtmlEditorExample extends StatefulWidget {
   HtmlEditorExample({Key? key, required this.title}) : super(key: key);
@@ -20,7 +21,7 @@ class _HtmlEditorExampleState extends State<HtmlEditorExample> {
 
   @override
   Widget build(BuildContext context) {
-    var theChild = HtmlEditor(
+    final editor = HtmlEditor(
       controller: controller,
       htmlEditorOptions: HtmlEditorOptions(
         hint: 'Your text here...',
@@ -46,7 +47,7 @@ class _HtmlEditorExampleState extends State<HtmlEditorExample> {
         extendBodyBehindAppBar: true,
         extendBody: true,
       ),
-      cupertino: (_, __) => CupertinoPageScaffoldData(resizeToAvoidBottomInset: false, resizeToAvoidBottomInsetTab: false),
+      cupertino: (_, __) => CupertinoPageScaffoldData(resizeToAvoidBottomInset: true, resizeToAvoidBottomInsetTab: true),
       appBar: PlatformAppBar(
         title: Text(widget.title),
         material: (_, __) => MaterialAppBarData(
@@ -56,22 +57,24 @@ class _HtmlEditorExampleState extends State<HtmlEditorExample> {
           transitionBetweenRoutes: false,
         ),
       ),
-      body: Localizations(
-        locale: const Locale('en', 'US'),
-        delegates: <LocalizationsDelegate<dynamic>>[
-          DefaultWidgetsLocalizations.delegate,
-          DefaultMaterialLocalizations.delegate,
-        ],
-        child: TouchIndicator(
-          enabled: false,
-          child: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  theChild,
-                ],
-              ),
-            ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Platform.isIOS
+                  ? Material(
+                      color: Colors.transparent,
+                      child: Localizations(
+                        locale: const Locale('en', 'UK'),
+                        delegates: <LocalizationsDelegate<dynamic>>[
+                          DefaultWidgetsLocalizations.delegate,
+                          DefaultMaterialLocalizations.delegate,
+                        ],
+                        child: editor,
+                      ),
+                    )
+                  : editor,
+            ],
           ),
         ),
       ),
