@@ -16,7 +16,6 @@ class HtmlEditorExample extends StatefulWidget {
 }
 
 class _HtmlEditorExampleState extends State<HtmlEditorExample> {
-  String result = '';
   final HtmlEditorController controller = HtmlEditorController();
 
   @override
@@ -44,8 +43,8 @@ class _HtmlEditorExampleState extends State<HtmlEditorExample> {
 
     return PlatformScaffold(
       material: (_, __) => MaterialScaffoldData(
-        extendBodyBehindAppBar: true,
-        extendBody: true,
+        extendBodyBehindAppBar: false,
+        extendBody: false,
       ),
       cupertino: (_, __) => CupertinoPageScaffoldData(resizeToAvoidBottomInset: true, resizeToAvoidBottomInsetTab: true),
       appBar: PlatformAppBar(
